@@ -59,7 +59,7 @@ class Board
   end
 
   def win?
-    if win_on_row? || win_on_column?# || win_on_diagonal?
+    if win_on_row? || win_on_column? || win_on_diagonal?
       true
     else
       false
@@ -86,6 +86,19 @@ class Board
     elsif @matrix[0][1] == @matrix[1][1] && @matrix[1][1] == @matrix[2][1] && @matrix[0][1] != EMPTY
       returnVal = true
     elsif @matrix[0][2] == @matrix[1][2] && @matrix[1][2] == @matrix[2][2] && @matrix[0][2] != EMPTY
+      returnVal = true
+    end
+    returnVal
+  end
+
+  def win_on_diagonal?
+    returnVal = false
+    # TODO: Refactor to more general algorithm
+    if @matrix[0][0] == @matrix[1][1] && @matrix[1][1] == @matrix[2][2] && @matrix[0][0] != EMPTY
+      # upperleft to lowerright
+      returnVal = true
+    elsif @matrix[0][2] == @matrix[1][1] && @matrix[1][1] == @matrix[2][0] && @matrix[0][2] != EMPTY
+      # lowerleft to upperright
       returnVal = true
     end
     returnVal
