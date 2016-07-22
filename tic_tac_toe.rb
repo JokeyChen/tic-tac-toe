@@ -9,10 +9,11 @@ end
 
 class Board
   attr_accessor :matrix
-  def initialize(args)
-    upper_row = [nil, nil, nil]
-    mid_row = [nil, nil, nil]
-    lower_row = [nil, nil, nil]
+
+  def initialize(empty)
+    upper_row = [empty, empty, empty]
+    mid_row = [empty, empty, empty]
+    lower_row = [empty, empty, empty]
     @matrix = [upper_row, mid_row, lower_row]
   end
 
@@ -23,6 +24,9 @@ class Board
   end
 
   def display_board
+    @matrix.each do |row|
+      puts "#{row[0]} #{row[1]} #{row[2]}"
+    end
   end
 end
 
