@@ -1,4 +1,11 @@
-class Player; end
+class Player
+  attr_reader :name, :mark
+
+  def initialize(name, mark)
+    @name = name
+    @mark = mark
+  end
+end
 
 class Stone
   attr_reader :sourcePlayer
@@ -31,7 +38,7 @@ class Board
 end
 
 class Game
-  attr_reader :playerO, :playerX
+  attr_reader :playerX, :playerY
   attr_accessor :playerInTurn
 
   def initialize(args)
