@@ -57,6 +57,39 @@ class Board
     end
     return true
   end
+
+  def win?
+    if win_on_row? || win_on_column?# || win_on_diagonal?
+      true
+    else
+      false
+    end
+  end
+
+  def win_on_row?
+    returnVal = false
+    @matrix.each do |row|
+      # TODO: Refactor to more general algorithm
+      if row[0] == row[1] && row[1] == row[2] && row[0] != EMPTY
+        returnVal = true
+        break
+      end
+    end
+    returnVal
+  end
+
+  def win_on_column?
+    returnVal = false
+    # TODO: Refactor to more general algorithm
+    if @matrix[0][0] == @matrix[1][0] && @matrix[1][0] == @matrix[2][0] && @matrix[0][0] != EMPTY
+      returnVal = true
+    elsif @matrix[0][1] == @matrix[1][1] && @matrix[1][1] == @matrix[2][1] && @matrix[0][1] != EMPTY
+      returnVal = true
+    elsif @matrix[0][2] == @matrix[1][2] && @matrix[1][2] == @matrix[2][2] && @matrix[0][2] != EMPTY
+      returnVal = true
+    end
+    returnVal
+  end
 end
 
 class Location
@@ -100,6 +133,8 @@ class Game
     # stop when the board is no longer empty
     if @board.full?
       false
+    elsif @board.win?
+      false
     else
       true
     end
@@ -115,10 +150,12 @@ class Game
 
   def game_loop
     @playerInTurn = @playerX
-    while continue?
+    while true
       @board.display_board
       parse_command
+      break if not continue?
     end
+    @board.display_board
     display_winner
     end_game
   end
