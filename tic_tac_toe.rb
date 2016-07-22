@@ -120,9 +120,6 @@ class Game
   def initialize
     display_welcome
     game_setup
-    game_loop
-    display_winner
-    end_game
   end
 
   def game_setup
@@ -161,7 +158,7 @@ class Game
     end
   end
 
-  def game_loop
+  def start_game
     @playerInTurn = @playerX
     while true
       @board.display_board
