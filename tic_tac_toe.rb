@@ -31,7 +31,7 @@ class Board
     if @matrix[location.y] == nil || @matrix[location.y][location.x] == nil
       false
     else
-      if @matrix[location.y][location.x] == "="
+      if @matrix[location.y][location.x] == EMPTY
         true
       else
         false
