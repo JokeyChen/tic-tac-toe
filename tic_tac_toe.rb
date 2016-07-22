@@ -5,11 +5,16 @@ class Player
     @name = name
     @mark = mark
   end
+
+  def make_move(x, y)
+    stone = Stone.new(self)
+  end
 end
 
 class Stone
   attr_reader :sourcePlayer
-  def initialize player
+
+  def initialize(player)
     @sourcePlayer = player
   end
 end
@@ -17,17 +22,25 @@ end
 class Board
   attr_accessor :matrix
 
-  def initialize(empty)
-    upper_row = [empty, empty, empty]
-    mid_row = [empty, empty, empty]
-    lower_row = [empty, empty, empty]
+  EMPTY = "="
+
+  def initialize
+    upper_row = [EMPTY, EMPTY, EMPTY]
+    mid_row = [EMPTY, EMPTY, EMPTY]
+    lower_row = [EMPTY, EMPTY, EMPTY]
     @matrix = [upper_row, mid_row, lower_row]
   end
 
-  def valid_move?
+  def valid_move?(x, y)
+    unless @matrix[y][x] == "="
+      false
+    else
+      true
+    end
   end
 
-  def put_stone
+  def put_stone_at(stone, x, y)
+    @matrix[y][x] = stone.sourcePlayer.mark
   end
 
   def display_board
@@ -38,20 +51,28 @@ class Board
 end
 
 class Game
-  attr_reader :playerX, :playerY
-  attr_accessor :playerInTurn
+  attr_reader :playerX, :playerY, :playerInTurn, :board
 
-  def initialize(args)
-
+  def initialize
+    @board = Board.new
+    @playerX = Player.new("X", "X")
+    @playerY = Player.new("Y", "O")
+    start_game
   end
 
   def continue?
   end
 
   def switch_player
+    if @playerInTurn == @playerX
+      @playerInTurn = @playerY
+    else
+      @playerInTurn = @playerX
+    end
   end
 
   def start_game
+    @playerInTurn = @playerX
   end
 
   def end_game
@@ -61,6 +82,19 @@ class Game
   end
 
   def display_welcome
+  end
+
+  def display_invalid_move
+    puts "INVALID MOVE"
+  end
+
+  def make_move(x, y)
+    if @board.valid_move?(x, y)
+      stone = Stone.new(playerInTurn)
+      @board.put_stone_at(stone, x, y)
+    else
+      display_error
+    end
   end
 
 end
