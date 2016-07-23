@@ -44,6 +44,7 @@ class Board
   end
 
   def display_board
+    puts "> The board now look like this (\"#{EMPTY}\" means empty)"
     @matrix.each do |row|
       puts "#{row[0]} #{row[1]} #{row[2]}"
     end
@@ -119,6 +120,8 @@ class Game
 
   def initialize
     display_welcome
+    # sleep for 1 second for better reading
+    sleep 1
     game_setup
   end
 
@@ -130,10 +133,10 @@ class Game
 
   def create_player
     # prompt the user for player's name
-    puts "What's the name of this player?"
+    puts "> What's the name of this player?"
     name = gets.chomp
     # prompt the user for player's mark
-    puts "What's the mark of this player?"
+    puts "> What's the mark of this player?"
     mark = gets.chomp
     # create the player and return
     Player.new(name, mark)
@@ -166,6 +169,8 @@ class Game
       break if not continue?
     end
     @board.display_board
+    # delay for 1 second for betting reading
+    sleep 1
     display_winner
     end_game
   end
@@ -178,41 +183,41 @@ class Game
     when "exit"
       end_game
     else
-      puts "Invalid command!"
+      puts "> INVALID COMMAND!"
     end
   end
 
   def prompt_for_instruction
-    puts "Please enter a command (move or exit):"
+    puts "> Please enter a command (move or exit):"
     gets.chomp
   end
 
   def prompt_for_location
-    puts "Please enter the x coordinate:"
+    puts "> Please enter the x coordinate (upperleft is 1):"
     # convert the string to int then to 0-based
     x = gets.chomp.to_i - 1
-    puts "Please enter the y coordinate:"
+    puts "> Please enter the y coordinate (upperleft is 1):"
     y = gets.chomp.to_i - 1
     Location.new(x, y)
   end
 
   def end_game
-    puts "GOODBYE!!!!"
+    puts "> Goodbye!"
     exit
   end
 
   def display_winner
     # the last player in turn is the winner
     winner = playerInTurn == playerX ? playerY : playerX
-    puts "The winner is: #{winner.name}! Congratulations!"
+    puts "> The winner is: #{winner.name}! Congratulations!"
   end
 
   def display_welcome
-    puts "WELCOME!!!!"
+    puts "> Welcome to my tic tac toe game!"
   end
 
   def display_invalid_move
-    puts "INVALID MOVE"
+    puts "> Invalid move! Please try again!"
   end
 
   def make_move(location)
